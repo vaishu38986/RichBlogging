@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Subscription</title>
+    <link rel="stylesheet" href="{% static 'css/purchase_sub.css' %}">
+</head>
+
+<body>
+    <section class="subscription-purchase">
+        <h2>Purchase a Subscription Plan</h2>
+        <form action="{% url 'purchase' %}" method="post">
+            {% csrf_token %}
+            <label for="plan">Select a Plan:</label>
+            <select name="plan" id="plan">
+                {% for plan in plans %}
+                <option value="{{ plan.name }}">{{ plan.name }}</option>
+                {% endfor %}
+            </select>
+            
+            <button type="submit">Purchase</button>
+        </form>
+    </section>
+</body>
+
+</html>

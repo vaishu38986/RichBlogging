@@ -1,0 +1,66 @@
+/* style.css */
+
+/* Body styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Vertically center the content */
+  height: 100vh;
+}
+
+/* Form container styles */
+.subscription-purchase {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Heading styles */
+.subscription-purchase h2 {
+  text-align: center;
+  color: #333;
+}
+
+/* Form styles */
+.subscription-purchase form {
+  margin-top: 20px;
+}
+
+/* Label styles */
+.subscription-purchase label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #666;
+}
+
+/* Select styles */
+.subscription-purchase select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+/* Button styles */
+.subscription-purchase button {
+  width: 100%;
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.subscription-purchase button:hover {
+  background-color: #0056b3;
+}

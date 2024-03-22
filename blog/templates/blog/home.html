@@ -1,0 +1,251 @@
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        h2 {
+            color: #444;
+        }
+
+        p {
+            color: #666;
+            overflow: hidden;
+            max-lines: 5;
+        }
+
+        .blog-post .post-content {
+            overflow: hidden;
+            max-height: 3em;
+            line-height: 1.5em;
+            transition: max-height 0.3s ease;
+            /* Add transition for smooth height change */
+        }
+
+        .blog-post .show-all {
+            max-height: none;
+            /* Show all lines when 'show-all' class is present */
+        }
+
+
+
+        a {
+            color: #008cba;
+            text-decoration: none;
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        form {
+            color: #008cba;
+            text-decoration: none;
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background-color: #ccc;
+            margin: 20px 0;
+        }
+
+        img {
+            max-width: 200px;
+            height: auto;
+
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            /* Optional: add some bottom margin for spacing */
+        }
+
+        .card {
+            margin: 20px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background-color: #f0f0f0;
+            padding: 10px;
+            text-align: center;
+            justify-content: space-evenly;
+            display: flex;
+        }
+
+        .lcp {
+            background-color: #f0f0f0;
+            padding: 10px 20px;
+            text-align: center;
+            justify-content: space-evenly;
+            display: flex;
+            align-items: center;
+        }
+
+
+        .lcp a {
+            padding: 10px;
+            background-color: #dc3545;
+            color: #fff;
+            border-radius: 8px;
+        }
+
+        .card-body {
+
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -15px;
+        }
+
+        .col-md-4 {
+            flex: 0 0 30%;
+            max-width: 30%;
+            padding: 0 15px;
+        }
+
+        .blog-post {
+            background-color: white;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .blog-post img {
+            max-height: 50%;
+            max-width: 100%;
+            border-radius: 8px;
+            height: auto;
+            margin-top: 5px;
+        }
+
+        h1 {
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .plas button {
+            margin: 5px;
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+            font-size: 16px;
+        }
+
+        form button[type="submit"] {
+            margin: 5px;
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .subscription-info {
+            padding: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        function toggleContent(button) {
+            var content = button.previousElementSibling;
+            if (content.classList.contains('show-all')) {
+                content.classList.remove('show-all');
+                button.innerHTML = 'Show More';
+            } else {
+                content.classList.add('show-all');
+                button.innerHTML = 'Show Less';
+            }
+        }
+
+
+    </script>
+    <div class="card">
+        <div class="card-header">
+            <h1>Welcome to Blogging App premium </h1>
+            <div class="lcp">
+                <form action="{% url 'purchase' %}">
+                    {% csrf_token %}
+                    <div class="plas">
+                        <button>Plans</button>
+                    </div>
+
+                </form>
+                {% if user_profile.max_post > 0 %}
+                <form action="{% url 'create_post' %}">{% csrf_token %}
+                    <button type="submit">Create New Post</button>
+                </form>
+                {% endif %}
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form>
+            </div>
+        </div>
+        <div class="subscription-info">
+            <h2>Welcome {{user_profile.user}} </h2>
+            <p>Subscription Status: {% if user_profile.active_subscription %} Active {% else %} Not Active {% endif %}
+            </p>
+            {% if user_profile.active_subscription %}
+            <p>Subscription Plan: {{ user_profile.subscription_status }}</p>
+            <p>Posts Left : {{ user_profile.max_post }} </p>
+            {% endif %}
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% for post in posts %}
+                <div class="col-md-4">
+                    <div class="blog-post">
+                        <img src="{{ post.image }}" alt="Post Image">
+                        <h2>{{ post.title }}</h2>
+                        <p class="post-content">{{ post.content }}</p>
+                        <p>Author: {{ post.author.username }}</p>
+                        <p>Date: {{ post.publication_date }}</p>
+                        <button class="show-more-btn" onclick="toggleContent(this)">Show More</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
